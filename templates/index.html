@@ -1,0 +1,46 @@
+<!--index.html-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Flask with matplotlib</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    function drawGraph(obj) {
+        var idx = obj.selectedIndex;
+        var value = obj.options[idx].value;
+        var plotdata = document.getElementById('plotimg');
+        $.get("/plot/" + value, function(data) {
+            plotdata.src = "data:image/png:base64," + data;
+        });
+    };
+    $(document).ready(function() {
+        //initialize components
+        var target = document.getElementById('selector');
+        drawGraph(target);
+    });
+    </script>
+</head>
+
+<body>
+    <h1>Plot Graph</h1>
+    <div>
+        <p>select a Raspberry Pi 3</p>
+        <select id=selector onchange="drawGraph(this)">
+            <option value="01">01</option>
+            <option value="02">02</option>
+            <option value="03">03</option>
+            <option value="04">04</option>
+            <option value="05">05</option>
+            <option value="06">06</option>
+            <option value="07">07</option>
+            <option value="08">08</option>
+            <option value="09">09</option>
+            <option value="10">10</option>
+        </select>
+    </div>
+    <br/>
+    <img id=plotimg></img>
+</body>
+
+</html>
