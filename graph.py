@@ -25,6 +25,7 @@ def main():
 
         plt.plot(x, y_hum, label='humidity')
         plt.plot(x, y_temp, label='temperature')
+        # TODO : plt.ylabel
 
         plt.legend()
         plt.ylim([0, 100])

@@ -4,7 +4,6 @@ from io import BytesIO
 import urllib
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
-import numpy as np
 import pandas as pd
 
 import os
