@@ -16,8 +16,9 @@ while True:
         hum = round(hum, 1)
         temp = round(temp, 1)
 
+        user_id = '01'
         # ユーザid, 現在のUnixTime, 気温, 湿度を追加
-        new_df = pd.DataFrame([['01', time.time(), temp, hum]], columns=['id', 'ut', 'temp', 'hum'])
+        new_df = pd.DataFrame([[user_id, time.time(), temp, hum]], columns=['id', 'ut', 'temp', 'hum'])
         df = df.append(new_df)
 
         if hum is not None and temp is not None:
@@ -30,5 +31,6 @@ while True:
 
     except KeyboardInterrupt: # ctrl+c で中止したとき
         print("end")
-        df.to_csv("out_test.csv")
+        csv_name = "output" + user_id + "_" + str(int(time.time())) + ".csv"
+        df.to_csv(csv_name)
         exit()
