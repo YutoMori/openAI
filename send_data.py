@@ -2,19 +2,21 @@ import Adafruit_DHT
 import pandas as pd
 import time
 
+# センサ情報
 sensor = Adafruit_DHT.DHT22
 pin = 23
-hum, temp = Adafruit_DHT.read_retry(sensor, pin)
-hum = round(hum, 1)
-temp = round(temp, 1)
-df = pd.DataFrame([['01', time.time(), temp, hum]], columns=['id', 'ut', 'temp', 'hum'])
-time.sleep(1)
+
+# 空のDataFrameを作成
+df = pd.DataFrame()
 
 while True:
     try:
+        # 温度と湿度を受け取る
         hum, temp = Adafruit_DHT.read_retry(sensor, pin)
         hum = round(hum, 1)
         temp = round(temp, 1)
+
+        # ユーザid, 現在のUnixTime, 気温, 湿度を追加
         new_df = pd.DataFrame([['01', time.time(), temp, hum]], columns=['id', 'ut', 'temp', 'hum'])
         df = df.append(new_df)
 
@@ -26,7 +28,7 @@ while True:
         
         time.sleep(1)
 
-    except KeyboardInterrupt:
+    except KeyboardInterrupt: # ctrl+c で中止したとき
         print("end")
         df.to_csv("out_test.csv")
         exit()
