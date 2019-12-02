@@ -4,7 +4,9 @@ from io import BytesIO
 import urllib
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
+import matplotlib.dates as mdates
 import pandas as pd
+import datetime
 
 import os
 import glob
@@ -19,13 +21,16 @@ def plot_graph(func='01'):
     df = pd.read_csv('all.csv')
     
     df = df[df['id'] == int(func)]
-    ax.plot(df['hum'], color='C0', label='humidity')
+    ax.plot(df['ut'], df['hum'], color='C0', label='humidity')
     ax.set_ylim([0,100])
     ax.set_ylabel('humidity')
     ax1 = ax.twinx()
-    ax1.plot(df['temp'], color='C1', label='temperature')
+    
     ax1.set_ylim([0, 40])
     ax1.set_ylabel('temperature')
+    ax1.plot(df['ut'], df['temp'], color='C1', label='temperature')
+    
+    fig.autofmt_xdate()
 
     fig.legend()
     canvas = FigureCanvasAgg(fig)
@@ -46,6 +51,9 @@ def index():
     for file_name in ALL_files:
         list_df.append(pd.read_csv(file_name))
     df = pd.concat(list_df, sort=False)
+    df['ut'] = df['ut'].astype(int)
+    df['ut'] = pd.to_datetime(df['ut'], unit="s")
+    df['ut'] += pd.tseries.offsets.Hour(9)
     df.to_csv('./all.csv')
     print("merge csv")
     return render_template("index.html", img_data=None)
