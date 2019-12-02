@@ -16,7 +16,8 @@ while True:
         hum = round(hum, 1)
         temp = round(temp, 1)
 
-        user_id = '01'
+        user_id = '01' # PCのユーザIDを記述
+        
         # ユーザid, 現在のUnixTime, 気温, 湿度を追加
         new_df = pd.DataFrame([[user_id, time.time(), temp, hum]], columns=['id', 'ut', 'temp', 'hum'])
         df = df.append(new_df)
