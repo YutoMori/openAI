@@ -28,6 +28,7 @@ while True:
             print('Failed to get reading. Try again!')
             exit()
         
+        # 1秒空ける
         time.sleep(1)
 
     except KeyboardInterrupt: # ctrl+c で中止したとき
