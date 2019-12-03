@@ -21,14 +21,14 @@ def plot_graph(func='01'):
     df = pd.read_csv('all.csv')
     
     df = df[df['id'] == int(func)]
-    ax.plot(df['ut'], df['hum'], color='C0', label='humidity')
+    ax.plot(df['hum'], color='C0', label='humidity')
     ax.set_ylim([0,100])
     ax.set_ylabel('humidity')
     ax1 = ax.twinx()
     
     ax1.set_ylim([0, 40])
     ax1.set_ylabel('temperature')
-    ax1.plot(df['ut'], df['temp'], color='C1', label='temperature')
+    ax1.plot(df['temp'], color='C1', label='temperature')
     
     fig.autofmt_xdate()
 
