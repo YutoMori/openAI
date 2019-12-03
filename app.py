@@ -18,9 +18,16 @@ app = Flask(__name__)
 def plot_graph(func='01'):
     fig = Figure()
     ax = fig.add_subplot(111)
-    df = pd.read_csv('all.csv')
+    df = pd.read_csv('all.csv', usecols=['id', 'ut', 'temp', 'hum'])
+
+    # ut(時刻)を基に昇順ソートする
+    df.sort_values('ut', inplace=True)
+    # df = df.reset_index()
+
     
     df = df[df['id'] == int(func)]
+    print(df)
+    # ax.plot(df['index'], df['hum'], color='C0', label='humidity')
     ax.plot(df['hum'], color='C0', label='humidity')
     ax.set_ylim([0,100])
     ax.set_ylabel('humidity')
@@ -28,6 +35,7 @@ def plot_graph(func='01'):
     
     ax1.set_ylim([0, 40])
     ax1.set_ylabel('temperature')
+    # ax1.plot(df['index'], df['temp'], color='C1', label='temperature')
     ax1.plot(df['temp'], color='C1', label='temperature')
     
     fig.autofmt_xdate()
@@ -49,7 +57,9 @@ def index():
     # フォルダ内の全csvをマージ
     list_df = []
     for file_name in ALL_files:
-        list_df.append(pd.read_csv(file_name))
+        list_df.append(pd.read_csv(file_name, usecols=['id', 'ut', 'temp', 'hum']))
+    
+    # python の list型 から pandas の DataFrame型 に変更
     df = pd.concat(list_df, sort=False)
     df['ut'] = df['ut'].astype(int)
     df['ut'] = pd.to_datetime(df['ut'], unit="s")
