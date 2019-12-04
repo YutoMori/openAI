@@ -33,6 +33,6 @@ while True:
 
     except KeyboardInterrupt: # ctrl+c で中止したとき
         print("end")
-        csv_name = "output" + user_id + "_" + str(int(time.time())) + ".csv"
+        csv_name = "csv/output" + user_id + "_" + str(int(time.time())) + ".csv"
         df.to_csv(csv_name)
         exit()
