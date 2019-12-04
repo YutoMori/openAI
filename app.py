@@ -61,12 +61,12 @@ def index():
     for file_name in ALL_files:
         list_df.append(pd.read_csv(file_name, usecols=['id', 'ut', 'temp', 'hum']))
     
-    # python の list型 から pandas の DataFrame型 に変更
+    # python の list型 から pandas の DataFrame型 に変換
     df = pd.concat(list_df, sort=False)
     print("merge csv")
     df.to_csv('./all.csv')
 
-    # Unixtime を pandas の datetime型に変換する
+    # Unixtime を pandas の datetime型に変換
     df['ut'] = df['ut'].astype(int)
     df['ut'] = pd.to_datetime(df['ut'], unit="s")
     df['ut'] += pd.tseries.offsets.Hour(9) # 日本の時刻に合わせる
